@@ -14,14 +14,6 @@ var db = {
   sequelize: new Sequelize(config.sequelize.uri, config.sequelize.options)
 };
 
-db.Thing = db.sequelize.import(path.join(
-  config.root,
-  'server',
-  'api',
-  'thing',
-  'thing.model'
-));
-
 db.User = db.sequelize.import(path.join(
   config.root,
   'server',
