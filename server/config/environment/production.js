@@ -13,12 +13,14 @@ module.exports = {
             process.env.PORT ||
             8080,
 
-  // MongoDB connection options
-  mongo: {
-    uri:    process.env.MONGOLAB_URI ||
-            process.env.MONGOHQ_URL ||
-            process.env.OPENSHIFT_MONGODB_DB_URL +
-            process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://localhost/assassins'
-  }
+  sequelize: {
+    uri: process.env.DATABASE_URL,
+    options: {
+      dialog: 'postgres',
+      port: 5432,
+      logging: false
+    }
+  },
+
+  seedDB: true
 };

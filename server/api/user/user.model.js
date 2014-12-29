@@ -8,7 +8,7 @@ var validatePresenceOf = function(value) {
 };
 
 module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define('User', {
+  var User = sequelize.define('user', {
 
     _id: {
       type: DataTypes.INTEGER,
