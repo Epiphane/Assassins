@@ -4,9 +4,6 @@
 // ===========================
 module.exports = {
   // MongoDB connection options
-  mongo: {
-    uri: 'mongodb://localhost/assassins-test'
-  },
   sequelize: {
     uri: 'sqlite://',
     options: {

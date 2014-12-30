@@ -23,5 +23,30 @@ db.User = db.sequelize.import(path.join(
 ));
 
 // Insert models below
+db.Player = db.sequelize.import(path.join(
+  config.root,
+  'server',
+  'api',
+  'player',
+  'player.model'
+));
+db.Game = db.sequelize.import(path.join(
+  config.root,
+  'server',
+  'api',
+  'game',
+  'game.model'
+));
+
+db.Game.belongsToMany(db.User, { through: db.Player });
+db.User.belongsToMany(db.Game, { through: db.Player });
+
+db.Game.belongsTo(db.User, {
+  constraints: false,
+  foreignKey: {
+    name: 'GameMasterId',
+    allowNull: false
+  }
+});
 
 module.exports = db;
