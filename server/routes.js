@@ -19,6 +19,12 @@ module.exports = function(app) {
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
    .get(errors[404]);
 
+  // Test path for my horrible unethical design experiments
+  app.route('/design/main')
+    .get(function(req, res) {
+      res.sendFile(path.resolve(app.get('appPath') + '/app/partials/main-test.html'));
+    });
+
   // All other routes should redirect to the index.html
   app.route('/*')
     .get(function(req, res) {
