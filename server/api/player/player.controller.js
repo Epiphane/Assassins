@@ -1,8 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-// var sqldb = require('../../sqldb')
-// var Players = sqldb.Game;
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;

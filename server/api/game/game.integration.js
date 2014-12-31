@@ -1,147 +1,165 @@
-'use strict';
+// 'use strict';
 
-var app = require('../../app');
-var request = require('supertest');
+// var app = require('../../app');
+// var request = require('supertest');
 
-var newGame;
+// var newGame;
 
-describe('Game API:', function() {
+// describe('Game API:', function() {
+//   var user;
 
-  describe('GET /api/games', function() {
-    var games;
+//   // Clear users before testing
+//   before(function(done) {
+//     User.destroy().then(function() {
+//       user = User.build({
+//         name: 'Fake User',
+//         email: 'test@test.com',
+//         password: 'password'
+//       });
 
-    beforeEach(function(done) {
-      request(app)
-        .get('/api/games')
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          games = res.body;
-          done();
-        });
-    });
+//       user.save().then(function() {
+//         done();
+//       }, function(err) {
+//         return done(err);
+//       });
+//     });
+//   });
 
-    it('should respond with JSON array', function() {
-      games.should.be.instanceOf(Array);
-    });
+//   describe('GET /api/games', function() {
+//     var games;
 
-  });
+//     beforeEach(function(done) {
+//       request(app)
+//         .get('/api/games')
+//         .expect(200)
+//         .expect('Content-Type', /json/)
+//         .end(function(err, res) {
+//           if (err) {
+//             return done(err);
+//           }
+//           games = res.body;
+//           done();
+//         });
+//     });
 
-  describe('POST /api/games', function() {
-    beforeEach(function(done) {
-      request(app)
-        .post('/api/games')
-        .send({
-          name: 'New Game',
-          info: 'This is the brand new game!!!'
-        })
-        .expect(201)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          newGame = res.body;
-          done();
-        });
-    });
+//     it('should respond with JSON array', function() {
+//       games.should.be.instanceOf(Array);
+//     });
 
-    it('should respond with the newly created game', function() {
-      newGame.name.should.equal('New Game');
-      newGame.info.should.equal('This is the brand new game!!!');
-    });
+//   });
 
-  });
+//   describe('POST /api/games', function() {
+//     beforeEach(function(done) {
+//       request(app)
+//         .post('/api/games')
+//         .send({
+//           name: 'New Game',
+//           info: 'This is the brand new game!!!'
+//         })
+//         .expect(201)
+//         .expect('Content-Type', /json/)
+//         .end(function(err, res) {
+//           if (err) {
+//             return done(err);
+//           }
+//           newGame = res.body;
+//           done();
+//         });
+//     });
 
-  describe('GET /api/games/:id', function() {
-    var game;
+//     it('should respond with the newly created game', function() {
+//       newGame.name.should.equal('New Game');
+//       newGame.info.should.equal('This is the brand new game!!!');
+//     });
 
-    beforeEach(function(done) {
-      request(app)
-        .get('/api/games/' + newGame._id)
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          game = res.body;
-          done();
-        });
-    });
+//   });
 
-    afterEach(function() {
-      game = {};
-    });
+//   describe('GET /api/games/:id', function() {
+//     var game;
 
-    it('should respond with the requested game', function() {
-      game.name.should.equal('New Game');
-      game.info.should.equal('This is the brand new game!!!');
-    });
+//     beforeEach(function(done) {
+//       request(app)
+//         .get('/api/games/' + newGame._id)
+//         .expect(200)
+//         .expect('Content-Type', /json/)
+//         .end(function(err, res) {
+//           if (err) {
+//             return done(err);
+//           }
+//           game = res.body;
+//           done();
+//         });
+//     });
 
-  });
+//     afterEach(function() {
+//       game = {};
+//     });
 
-  describe('PUT /api/games/:id', function() {
-    var updatedGame
+//     it('should respond with the requested game', function() {
+//       game.name.should.equal('New Game');
+//       game.info.should.equal('This is the brand new game!!!');
+//     });
 
-    beforeEach(function(done) {
-      request(app)
-        .put('/api/games/' + newGame._id)
-        .send({
-          name: 'Updated Game',
-          info: 'This is the updated game!!!'
-        })
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          updatedGame = res.body;
-          done();
-        });
-    });
+//   });
 
-    afterEach(function() {
-      updatedGame = {};
-    });
+//   describe('PUT /api/games/:id', function() {
+//     var updatedGame
 
-    it('should respond with the updated game', function() {
-      updatedGame.name.should.equal('Updated Game');
-      updatedGame.info.should.equal('This is the updated game!!!');
-    });
+//     beforeEach(function(done) {
+//       request(app)
+//         .put('/api/games/' + newGame._id)
+//         .send({
+//           name: 'Updated Game',
+//           info: 'This is the updated game!!!'
+//         })
+//         .expect(200)
+//         .expect('Content-Type', /json/)
+//         .end(function(err, res) {
+//           if (err) {
+//             return done(err);
+//           }
+//           updatedGame = res.body;
+//           done();
+//         });
+//     });
 
-  });
+//     afterEach(function() {
+//       updatedGame = {};
+//     });
 
-  describe('DELETE /api/games/:id', function() {
+//     it('should respond with the updated game', function() {
+//       updatedGame.name.should.equal('Updated Game');
+//       updatedGame.info.should.equal('This is the updated game!!!');
+//     });
 
-    it('should respond with 204 on successful removal', function(done) {
-      request(app)
-        .delete('/api/games/' + newGame._id)
-        .expect(204)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        });
-    });
+//   });
 
-    it('should respond with 404 when game does not exist', function(done) {
-      request(app)
-        .delete('/api/games/' + newGame._id)
-        .expect(404)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        });
-    });
+//   describe('DELETE /api/games/:id', function() {
 
-  });
+//     it('should respond with 204 on successful removal', function(done) {
+//       request(app)
+//         .delete('/api/games/' + newGame._id)
+//         .expect(204)
+//         .end(function(err, res) {
+//           if (err) {
+//             return done(err);
+//           }
+//           done();
+//         });
+//     });
 
-});
+//     it('should respond with 404 when game does not exist', function(done) {
+//       request(app)
+//         .delete('/api/games/' + newGame._id)
+//         .expect(404)
+//         .end(function(err, res) {
+//           if (err) {
+//             return done(err);
+//           }
+//           done();
+//         });
+//     });
+
+//   });
+
+// });

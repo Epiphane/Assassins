@@ -9,67 +9,79 @@ var sqldb = require('../sqldb');
 var User = sqldb.User;
 var Game = sqldb.Game;
 var Player = sqldb.Player;
+var Kill = sqldb.Kill;
 
 var forceUpdate = false;
 User.sync({ force: forceUpdate })
   .then(function() {
-    User.destroy();
+    Game.sync({ force: forceUpdate });
+    Player.sync({ force: forceUpdate });
+    Kill.sync({ force: forceUpdate });
   })
   .then(function() {
-    Game.sync({ force: forceUpdate })
-      .then(function() {
-        Game.destroy();
-      })
-      .then(function() {
-        Player.sync({ force: forceUpdate })
-        .then(function() {
-          Player.destroy();
-        })
-        .then(function() {
-      
-          // Create users
-          User.bulkCreate([{
-            provider: 'local',
-            name: 'Thomas',
-            email: 'exyphnos@gmail.com',
-            password: 'thomas'
-          }, {
-            provider: 'local',
-            name: 'Elliot',
-            email: 'elliotfiske@gmail.com',
-            password: 'elliot'
-          }, {
-            provider: 'local',
-            role: 'admin',
-            name: 'Admin',
-            email: 'admin@admin.com',
-            password: 'admin'
-          }])
-          .then(function() {
-            User.findAll().then(function(users) {
-              var thomas = users[0];
-              var elliot = users[1];
+    User.destroy();
+    Game.destroy();
+    Player.destroy();
+    Kill.destroy();
+  })
+  .then(function() {
 
-              // Create random game
-              Game.create({
-                name: 'Random Band',
-                active: true,
-                GameMasterId: elliot._id
-              });
+    // Create users
+    User.bulkCreate([{
+      provider: 'local',
+      name: 'Thomas',
+      email: 'exyphnos@gmail.com',
+      password: 'thomas'
+    }, {
+      provider: 'local',
+      name: 'Elliot',
+      email: 'elliotfiske@gmail.com',
+      password: 'elliot'
+    }, {
+      provider: 'local',
+      role: 'admin',
+      name: 'Admin',
+      email: 'admin@admin.com',
+      password: 'admin'
+    }])
+    .then(function() {
+      User.findAll().then(function(users) {
 
-              // Create MB Game
-              Game.create({
-                name: 'Mustang Band',
-                active: true,
-                GameMasterId: thomas._id
-              }).complete(function(err, game) {
-                
-                // Add Thomas and Elliot to game
-                thomas.addGame(game);
-                elliot.addGame(game);
+        // Create MB Game
+        Game.create({
+          name: 'Mustang Band',
+          active: true,
+          GameMasterId: users[0].getDataValue('_id')
+        }).complete(function(err, game) {
+          
+          // Add Thomas and Elliot to game
+          users[0].addGame(game).then(function(thomas) {
+            thomas.setDataValue('elo', 1400);
+            thomas.save().then(function() {
+              users[1].addGame(game).then(function(elliot) {
+
+                // Thomas killed Elliot!
+                game.createKill({
+                  killerUserId: thomas.getDataValue('userId'),
+                  victimUserId: elliot.getDataValue('userId')
+                });
+
+                // Elliot got him back!
+                game.createKill({
+                  killerUserId: elliot.getDataValue('userId'),
+                  victimUserId: thomas.getDataValue('userId')
+                });
               });
             });
           });
         });
+
+        // Create random game
+        Game.create({
+          name: 'Random Band',
+          active: true,
+          GameMasterId: users[1].getDataValue('_id')
+        });
       });
+    });
   });
