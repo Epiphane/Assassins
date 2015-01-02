@@ -3,6 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('kill', {
     points: DataTypes.INTEGER,
+    round: DataTypes.INTEGER,
     dateTime: DataTypes.DATE
   }, {
     hooks: {
@@ -14,6 +15,7 @@ module.exports = function(sequelize, DataTypes) {
                 throw 'Game, Killer, and Victim required';
               
               kill.setDataValue('dateTime', new Date());
+              kill.setDataValue('round', game.getDataValue('round'));
 
               // Elo adjustment credits:
               // http://en.wikipedia.org/wiki/Elo_rating_system#Theory

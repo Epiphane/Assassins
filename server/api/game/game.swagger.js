@@ -60,6 +60,16 @@ var model = {
         description: "Battle rank for then player"
       }
     }
+  },
+  AddPlayer: {
+    id: "AddPlayer",
+    required: ["player"],
+    properties: {
+      player: {
+        type: "integer",
+        description: "ID of user"
+      }
+    }
   }
 }
 
@@ -174,11 +184,12 @@ var api = {
     spec: {
       path: "/games/{gameId}/players",
       method: "POST",
-      summary: "Join a game",
+      summary: "Join/Add player to a game",
       nickname: "joinGame",
       produces: ["application/text"],
       parameters: [paramTypes.path("gameId", "ID of game to join", "integer"),
-        paramTypes.query("access_token", "Token of logged in user", "string")]
+        paramTypes.query("access_token", "Token of logged in user", "string"),
+        paramTypes.body("body", "Player to add (optional)", "AddPlayer")]
     }
   },
   leaveGame: {

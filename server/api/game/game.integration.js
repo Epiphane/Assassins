@@ -2,6 +2,7 @@
 
 // var app = require('../../app');
 // var request = require('supertest');
+// var User = require('../../sqldb').User;
 
 // var newGame;
 

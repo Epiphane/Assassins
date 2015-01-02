@@ -29,11 +29,13 @@ User.sync({ force: forceUpdate })
     // Create users
     User.bulkCreate([{
       provider: 'local',
+      role: 'admin',
       name: 'Thomas',
       email: 'exyphnos@gmail.com',
       password: 'thomas'
     }, {
       provider: 'local',
+      role: 'admin',
       name: 'Elliot',
       email: 'elliotfiske@gmail.com',
       password: 'elliot'

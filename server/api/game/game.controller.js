@@ -33,9 +33,7 @@ function handleEntityNotFound(res) {
 function validateGameMaster(req, res) {
   return function(game) {
     if(game.getDataValue('GameMasterId') !== req.user._id) {
-      res.status(401).json({
-        message: 'You are not the Game Master'
-      });
+      res.status(401).end('You are not the Game Master');
       return null;
     }
     return game;

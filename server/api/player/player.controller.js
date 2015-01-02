@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var User = require('../../sqldb').User;
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -32,11 +33,30 @@ exports.index = function(req, res) {
 };
 
 exports.create = function(req, res) {
+  if(req.user.getDataValue('_id') === req.game.getDataValue('GameMasterId')) {
+    if(req.body.player) {
+      User.find({
+        where: {
+          _id: req.body.player
+        }
+      }).then(function(user) {
+        user.hasGame(req.game).then(function(exists) {
+          if(exists) {
+            res.status(400).end(user.name + ' left this game!');
+          }
+          else {
+            user.addGame(req.game);
+            res.status(201).end(user.name + ' added to game');
+          }
+        });
+      });
+    }
+  }
   req.user.hasGame(req.game).then(function(exists) {
     var result;
     if(exists) {
       result = req.user.setGames([req.game], {
-        active: false
+        active: true
       });
     }
     else {
