@@ -35,19 +35,34 @@ exports.index = function(req, res) {
   }
 };
 
+exports.show = function(req, res) {
+  Kill.find({
+    _id: req.params.id
+  })
+    .then(function(kill) {
+      if(kill) {
+        res.status(200).json(kill);
+      }
+      else {
+        res.status(404).end('Kill not found');
+      }
+    })
+    .catch(handleError(res));
+};
+
 exports.create = function(req, res) {
   if(!req.game)
     res.status(404).end();
   else {
     req.game.findUsers({
       where: {
-        _id: req.params.id
+        _id: req.params.pid
       }
     }).then(function(killer) {
       if(killer) {
         req.game.createKill({
           killerUserId: req.user._id,
-          victimUserId: req.params.id
+          victimUserId: req.params.pid
         })
           .then(responseWithResult(res, 201))
           .catch(handleError(res));

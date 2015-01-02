@@ -41,6 +41,20 @@ var model = {
         "description": "User's Facebook profile"
       }
     }
+  },
+  "Password": {
+    "id":"Password",
+    "required": ["oldPassword", "newPassword"],
+    properties: {
+      "oldPassword": {
+        "type": "string",
+        "description": "Old password"
+      },
+      "newPassword": {
+        "type": "string",
+        "description": "New password"
+      }
+    }
   }
 }
 
@@ -112,10 +126,7 @@ var api = {
       nickname : "changePassword",
       produces : ["application/json"],
       parameters: [paramTypes.path("userId", "toootally useless", "integer"),
-        paramTypes.body("body", "old and new passwords", {
-          oldPassword: "",
-          newPassword: ""
-        }),
+        paramTypes.body("body", "old and new passwords", "Password"),
         paramTypes.query("access_token", "Token of logged in user", "string")]
     }
   }
@@ -131,9 +142,9 @@ module.exports = function(swagger, baseURL) {
   swagger.addModels({ models: model });
 
   swagger.addGet(api.index);
-  swagger.addDelete(api.deleteUser);
   swagger.addGet(api.me);
   swagger.addGet(api.show);
-  swagger.addPut(api.me);
   swagger.addPost(api.create);
+  swagger.addPut(api.changePassword);
+  swagger.addDelete(api.deleteUser);
 };

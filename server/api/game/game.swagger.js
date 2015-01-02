@@ -5,7 +5,7 @@ var swe        = swag.errors;
 var model = {
   "Game":{
     "id":"Game",
-    "required": ["_id", "name"],
+    "required": ["name"],
     "properties":{
       "_id":{
         "type":"integer",
@@ -43,6 +43,23 @@ var model = {
         "description": "The current rank"
       }
     }
+  },
+  Player: {
+    id: "Player",
+    properties: {
+      elo: {
+        "type":"integer",
+        "description": "The player's elo"
+      },
+      active: {
+        "type": "boolean",
+        description: "Whether the player is playing"
+      },
+      rank: {
+        type: "integer",
+        description: "Battle rank for then player"
+      }
+    }
   }
 }
 
@@ -66,8 +83,7 @@ var api = {
       type : "Game",
       nickname : "showGame",
       produces : ["application/json"],
-      parameters: [paramTypes.path("gameId", "ID of game to fetch", "integer")],
-      responseMessages : [swe.notFound('Game')]
+      parameters: [paramTypes.path("gameId", "ID of game to fetch", "integer")]
     }
   },
   create: {
@@ -77,8 +93,103 @@ var api = {
       summary : "Create a new game",
       nickname : "createGame",
       produces : ["application/json"],
-      parameters: [paramTypes.body("body", "Game to create", "Game")],
-      responseMessages : [swe.invalid('Game')]
+      parameters: [paramTypes.query("access_token", "Token of logged in user", "string"),
+        paramTypes.body("body", "Game to create", "Game")],
+    }
+  },
+  update: {
+    spec: {
+      path : "/games/{gameId}",
+      method: "PUT",
+      summary : "Update game information",
+      type : "Game",
+      nickname : "showGame",
+      produces : ["application/json"],
+      parameters: [paramTypes.path("gameId", "ID of game to fetch", "integer"),
+        paramTypes.query("access_token", "Token of logged in user", "string"),
+        paramTypes.body("body", "Game information to update", "Game")],
+    }
+  },
+  showRound: {
+    spec: {
+      description : "Round operations",  
+      path : "/games/{gameId}/round",
+      method: "GET",
+      summary : "See details on current round",
+      type : "Round",
+      nickname : "showRound",
+      produces : ["application/json"],
+      parameters: [paramTypes.path("gameId", "ID of game", "integer")]
+    }
+  },
+  startRound: {
+    spec: {
+      path : "/games/{gameId}/round",
+      method: "POST",
+      summary : "Start a new round",
+      type : "Round",
+      nickname : "startRound",
+      produces : ["application/json"],
+      parameters: [paramTypes.path("gameId", "ID of game", "integer"),
+        paramTypes.query("access_token", "Token of logged in user", "string")]
+    }
+  },
+  indexKills: {
+    spec: {
+      description : "Kill operations",  
+      path : "/games/{gameId}/kills",
+      method: "GET",
+      summary : "Get all kills in a game",
+      type : "Kill",
+      nickname : "indexKills",
+      produces : ["application/json"],
+      parameters: [paramTypes.path("gameId", "ID of game", "integer")]
+    }
+  },
+  createKill: {
+    spec: {
+      path : "/games/{gameId}/kills/{victimId}",
+      method: "POST",
+      summary : "Kill another player",
+      nickname : "createKill",
+      produces : ["application/json"],
+      parameters: [paramTypes.path("gameId", "ID of game", "integer"),
+        paramTypes.path("victimId", "ID of User to kill", "integer"),
+        paramTypes.query("access_token", "Token of logged in user", "string")],
+    }
+  },
+  indexPlayers: {
+    spec: {
+      description : "Player operations",  
+      path : "/games/{gameId}/players",
+      method: "GET",
+      summary : "Get all player in the game",
+      type : "Player",
+      nickname : "indexPlayers",
+      produces : ["application/json"],
+      parameters: [paramTypes.path("gameId", "ID of game", "integer")]
+    }
+  },
+  joinGame: {
+    spec: {
+      path: "/games/{gameId}/players",
+      method: "POST",
+      summary: "Join a game",
+      nickname: "joinGame",
+      produces: ["application/text"],
+      parameters: [paramTypes.path("gameId", "ID of game to join", "integer"),
+        paramTypes.query("access_token", "Token of logged in user", "string")]
+    }
+  },
+  leaveGame: {
+    spec: {
+      path: "/games/{gameId}/players",
+      method: "DELETE",
+      summary: "Leave a game",
+      nickname: "leaveGame",
+      produces: ["application/text"],
+      parameters: [paramTypes.path("gameId", "ID of game to leave", "integer"),
+        paramTypes.query("access_token", "Token of logged in user", "string")]
     }
   }
 };
@@ -92,7 +203,15 @@ module.exports = function(swagger, baseURL) {
 
   swagger.addModels({ models: model });
 
-  swagger.addGet(api.index);
-  swagger.addGet(api.show);
-  swagger.addPost(api.create);
+  swagger.addGet   (api.index);
+  swagger.addGet   (api.show);
+  swagger.addGet   (api.showRound);
+  swagger.addGet   (api.indexKills);
+  swagger.addGet   (api.indexPlayers);
+  swagger.addPost  (api.create);
+  swagger.addPost  (api.startRound);
+  swagger.addPost  (api.createKill);
+  swagger.addPost  (api.joinGame);
+  swagger.addPut   (api.update);
+  swagger.addDelete(api.leaveGame);
 };

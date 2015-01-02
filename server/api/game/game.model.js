@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var Promise = require('promise');
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('game', {
