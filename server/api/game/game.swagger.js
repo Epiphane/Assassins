@@ -207,7 +207,7 @@ var api = {
 
 module.exports = function(swagger, baseURL) {
   if(baseURL) {
-    for(method in api) {
+    for(var method in api) {
       api[method].spec.path = baseURL + api[method].spec.path;
     }
   }

@@ -9,7 +9,7 @@ module.exports = function documentation(req, res) {
 
   res.render(viewFilePath, function(err) {
     if (err) {
-      return res.json(result, result.status);
+      return res.json(err, err.status);
     }
 
     res.render(viewFilePath);
