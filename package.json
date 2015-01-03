@@ -21,6 +21,7 @@
     "passport-local": "~0.1.6",
     "pg": "^4.1.1",
     "promise": "^6.0.1",
+    "sendgrid": "^1.4.0",
     "sequelize": "^2.0.0-rc2",
     "sequelize-cli": "^1.0.2",
     "serve-favicon": "~2.0.1",

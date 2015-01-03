@@ -66,8 +66,8 @@ var model = {
     required: ["player"],
     properties: {
       player: {
-        type: "integer",
-        description: "ID of user"
+        type: "string",
+        description: "Email of user"
       }
     }
   }
