@@ -8,8 +8,8 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('express');
-var sqldb = require('./sqldb');
-var config = require('./config/environment');
+var sqldb   = require('./sqldb');
+var config  = require('./config/environment');
 
 // Populate databases with sample data
 if (config.seedDB) { require('./config/seed'); }

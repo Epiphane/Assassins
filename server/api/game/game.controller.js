@@ -30,6 +30,16 @@ function handleEntityNotFound(res) {
   };
 }
 
+function validateGameMaster(req, res) {
+  return function(game) {
+    if(game.getDataValue('GameMasterId') !== req.user._id) {
+      res.status(401).end('You are not the Game Master');
+      return null;
+    }
+    return game;
+  };
+}
+
 function saveUpdates(updates) {
   return function(entity) {
     return entity.updateAttributes(updates)
@@ -82,12 +92,14 @@ exports.update = function(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
+
   Game.find({
     where: {
       _id: req.params.id
     }
   })
     .then(handleEntityNotFound(res))
+    .then(validateGameMaster(req, res))
     .then(saveUpdates(req.body))
     .then(responseWithResult(res))
     .catch(handleError(res));
@@ -101,6 +113,7 @@ exports.destroy = function(req, res) {
     }
   })
     .then(handleEntityNotFound(res))
+    .then(validateGameMaster(req, res))
     .then(removeEntity(res))
     .catch(handleError(res));
 };
@@ -117,4 +130,27 @@ exports.validGame = function(req, res, next) {
       next();
     })
     .catch(handleError(res));
+};
+
+exports.isGameMaster = function(req, res, next) {
+  if(req.game.getDataValue('GameMasterId') !== req.user.getDataValue('_id')) {
+    res.status(401).json({
+      message: 'You are not the Game Master'
+    });
+  }
+  else
+    next();
+}
+
+exports.round = {
+  show: function(req, res) {
+    req.game.getRound()
+      .then(responseWithResult(res))
+      .catch(handleError(res));
+  },
+  create: function(req, res) {
+    req.game.createRound()
+      .then(responseWithResult(res, 201))
+      .catch(handleError(res));
+  }
 };

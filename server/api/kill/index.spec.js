@@ -2,37 +2,36 @@
 
 var proxyquire = require('proxyquire').noPreserveCache();
 
-var playerCtrlStub = {
-  index: 'playerCtrl.index'
+var killCtrlStub = {
+  index: 'killCtrl.index'
 };
 
 var routerStub = {
   get: sinon.spy(),
-  delete: sinon.spy(),
   post: sinon.spy()
 };
 
 // require the index with our stubbed out modules
-var playerIndex = proxyquire('./index.js', {
+var killIndex = proxyquire('./index.js', {
   'express': {
     Router: function() {
       return routerStub;
     }
   },
-  './player.controller': playerCtrlStub
+  './kill.controller': killCtrlStub
 });
 
-describe('Player API Router:', function() {
+describe('Kill API Router:', function() {
 
   it('should return an express router instance', function() {
-    // playerIndex.should.equal(routerStub);
+    killIndex.should.equal(routerStub);
   });
 
-  describe('GET /api/players', function() {
+  describe('GET /api/kills', function() {
 
-    it('should route to player.controller.index', function() {
+    it('should route to kill.controller.index', function() {
       routerStub.get
-                .withArgs('/', 'playerCtrl.index')
+                .withArgs('/', 'killCtrl.index')
                 .should.have.been.calledOnce;
     });
 

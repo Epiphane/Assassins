@@ -7,7 +7,11 @@ var gameCtrlStub = {
 };
 
 var routerStub = {
-  get: sinon.spy()
+  get: sinon.spy(),
+  put: sinon.spy(),
+  post: sinon.spy(),
+  delete: sinon.spy(),
+  use: sinon.spy()
 };
 
 // require the index with our stubbed out modules

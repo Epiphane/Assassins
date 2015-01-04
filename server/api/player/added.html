@@ -1,0 +1,14 @@
+You have been added to <%= game.getDataValue('name') %> by <%= user.getDataValue('name') %>. Congrats!<br />
+<br />
+
+<% if(tempPassword) { %>
+  <a href="http://kill-your-friends.herokuapp.com">
+    Click here to activate your account:
+  </a><br>
+  Username: (Your email)
+  Temporary password: <%= tempPassword %>
+<% } else { %>
+<a href="http://kill-your-friends.herokuapp.com">
+  Go there now.
+</a>
+<% } %>
