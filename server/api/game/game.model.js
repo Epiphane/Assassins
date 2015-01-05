@@ -17,6 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     organization: DataTypes.STRING,
+    rules: DataTypes.TEXT,
     startDate: {
       type: DataTypes.DATE,
       get: function() {

@@ -28,7 +28,7 @@
       </p>
       <p>
         <strong>Rules:</strong>
-        {{ game.rules }}
+        <span ng-bind-html="game.rules | newlines"></span>
     </div>
 
     <div class="col-md-3 game-page-leaderboard">

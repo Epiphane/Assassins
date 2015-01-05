@@ -55,3 +55,13 @@ angular.module('assassinsApp')
       return new Date(gameDate);
     };
   });
+
+angular.module('assassinsApp')
+  .filter('newlines', function() {
+    return function(text) {
+      if(text)
+        return text.replace(/\n/g, '<br />');
+      else
+        return '';
+    };
+  });

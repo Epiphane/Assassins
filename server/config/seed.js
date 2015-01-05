@@ -61,6 +61,9 @@ User.sync({ force: forceUpdate })
         Game.create({
           name: 'Kill your friends',
           organization: 'Mustang Band',
+          rules: 'Honor system applies. Your victim gets an email whenever ' +
+            'you kill them, so be honest please.\n\n' +
+            'No shooting during jobs, or band.',
           active: true,
           startDate: today,
           endDate: endOfQuarter,
