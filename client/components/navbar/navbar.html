@@ -1,70 +1,43 @@
-<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">
   <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" ui-sref="admin.dashboard">Kill Your Friends</a>
+      <a class="navbar-brand" ui-sref="main">Kill Your Friends</a>
     </div>
-    <!-- Top Menu Items -->
-    <ul class="nav navbar-right top-nav">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-        <ul class="dropdown-menu message-dropdown">
-          <li class="message-preview">
-            <a href="#">
-              <div class="media">
-                <span class="pull-left">
-                  <img class="media-object" src="http://placehold.it/50x50" alt="">
-                </span>
-                <div class="media-body">
-                  <h5 class="media-heading"><strong>John Smith</strong>
-                  </h5>
-                  <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li class="message-footer">
-            <a href="#">Read All New Messages</a>
-          </li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-        <ul class="dropdown-menu alert-dropdown">
-          <li>
-            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-          </li>
-          <li class="divider"></li>
-          <li>
-            <a href="#">View All</a>
-          </li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ user.name }} <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li>
-            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-          </li>
-          <li class="divider"></li>
-          <li>
-            <a ui-sref="admin.logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
+
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">I want to...<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Create a Game</a></li>
+            <li><a href="#">Join a Game</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Something else here</li>
+            <li><a href="#">Kill ur friends lol</a></li>
+            <li><a href="#">do it lol</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-hide="isLoggedIn()">
+          <a ui-sref="login">Login</a>
+        </li>
+        <li class="dropdown" ng-show="isLoggedIn()">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hello, {{ getCurrentUser().name }}<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a ui-sref="account"><i class="fa fa-user"></i> Account</a></li>
+            <li><a ui-sref="settings"><i class="fa fa-cog"></i> Change Password</a></li>
+            <li><a ui-sref="logout"><i class="fa fa-power-off"></i> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
   </div>
-</div>
+</nav>

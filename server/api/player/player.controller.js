@@ -38,6 +38,19 @@ exports.index = function(req, res) {
     .catch(handleError(res));
 };
 
+exports.me = function(req, res) {
+  req.game.getUsers({
+    where: {
+      'player.active': true,
+      'player.userId': req.user._id
+    }
+  })
+    .then(function(player) {
+      res.json(player);
+    })
+    .catch(handleError(res));
+};
+
 exports.create = function(req, res) {
   if(req.user.getDataValue('_id') === req.game.getDataValue('GameMasterId')) {
     if(req.body.player) {

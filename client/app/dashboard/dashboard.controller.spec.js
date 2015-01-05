@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Controller: TestRouteCtrl', function () {
+describe('Controller: DashboardCtrl', function () {
 
   // load the controller's module
   beforeEach(module('assassinsApp'));
 
-  var TestRouteCtrl, scope;
+  var DashboardCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    TestRouteCtrl = $controller('TestRouteCtrl', {
+    DashboardCtrl = $controller('DashboardCtrl', {
       $scope: scope
     });
   }));

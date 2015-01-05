@@ -75,7 +75,27 @@ exports.show = function(req, res) {
     }
   })
     .then(handleEntityNotFound(res))
-    .then(responseWithResult(res))
+    .then(function(game) {
+      if(game) {
+        game.getUsers({
+          order: 'player.elo'
+        }).then(function(users) {
+          game.dataValues.leaderboard = _.map(users, function(u) {
+            return _.merge(u.player, { 
+              dataValues: {
+                name: u.getDataValue('name') || u.getDataValue('email')
+              }
+            });
+          });
+
+          game.getRound().then(function(round) {
+            game.dataValues.round = round;
+            
+            res.json(game);
+          });
+        });
+      }
+    })
     .catch(handleError(res));
 };
 

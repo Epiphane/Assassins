@@ -16,7 +16,12 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      get: function() {
+        return this.dataValues.name || this.dataValues.email;
+      }
+    },
     email: {
       type: DataTypes.STRING,
       unique: {

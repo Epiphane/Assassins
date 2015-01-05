@@ -1,6 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
+if(typeof(Promise) === 'undefined')
+  var Promise = require('promise');
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('game', {
@@ -13,6 +15,19 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    organization: DataTypes.STRING,
+    startDate: {
+      type: DataTypes.DATE,
+      get: function() {
+        return this.dataValues.startDate + 8;
+      }
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      get: function() {
+        return this.dataValues.endDate + 8;
+      }
     },
     active: {
       type: DataTypes.BOOLEAN,

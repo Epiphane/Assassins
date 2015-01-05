@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="game-page-header">
+    <h1 class="game-page-title">{{ game.name }}</h1>
+    <p class="lead game-page-subtitle" ng-show="game.organization">in {{ game.organization }}</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-7 game-page-content">
+      <div class="targets" ng-show="player">
+        <h3>Your targets:</h3>
+        <span ng-hide="targets()">Game not started!</span>
+        <span ng-repeat="target in targets()">{{ target.name }} | </span>
+      </div>
+      <hr />
+
+      <p>
+        <strong ng-show="player">You are in this game of {{ game.name }}</strong>
+        <strong ng-hide="player">You are NOT in this game of {{ game.name }} 
+          <button class="box box-small btn-info" ng-click="joinGame()">
+            Join now!
+          </button>
+        </strong>
+      </p>
+      <p>
+        <strong>Duration:</strong>
+        <br>
+        <strong>{{ date(game.startDate) | date:'MMM dd' }}</strong> to <strong>{{ date(game.endDate) | date:'MMM dd' }}</strong>  
+      </p>
+      <p>
+        <strong>Rules:</strong>
+        {{ game.rules }}
+    </div>
+
+    <div class="col-md-3 game-page-leaderboard">
+      <table class="table table-striped table-leaderboard">
+        <h2>Leaderboard</h2>
+        <tr ng-repeat="leader in game.leaderboard">
+          <td>{{ $index }}</td>
+          <td>{{ leader.name }}</td>
+          <td><img src="http://placekitten.com/g/50/50" class="img-thumbnail" /></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div> <!-- /container -->
+

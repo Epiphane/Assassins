@@ -55,9 +55,15 @@ User.sync({ force: forceUpdate })
       User.findAll().then(function(users) {
 
         // Create MB Game
+        var today = new Date();
+        var endOfQuarter = new Date();
+        endOfQuarter.setDate(endOfQuarter.getDate() + 60);
         Game.create({
-          name: 'Mustang Band',
+          name: 'Kill your friends',
+          organization: 'Mustang Band',
           active: true,
+          startDate: today,
+          endDate: endOfQuarter,
           GameMasterId: users[0].getDataValue('_id')
         }).complete(function(err, game) {
           
@@ -66,6 +72,7 @@ User.sync({ force: forceUpdate })
             thomas.setDataValue('elo', 1400);
             thomas.save().then(function() {
               users[1].addGame(game).then(function(elliot) {
+                game.createRound();
 
                 // Thomas killed Elliot!
                 game.createKill({
