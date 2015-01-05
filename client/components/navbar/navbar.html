@@ -14,14 +14,15 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">I want to...<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Games<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Create a Game</a></li>
             <li><a href="#">Join a Game</a></li>
             <li class="divider"></li>
             <li class="dropdown-header">Something else here</li>
-            <li><a href="#">Kill ur friends lol</a></li>
-            <li><a href="#">do it lol</a></li>
+            <li ng-repeat="game in games">
+              <a ui-sref="dashboard({ id: game._id })">{{ game.name }}</a>
+            </li>
           </ul>
         </li>
       </ul>

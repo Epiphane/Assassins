@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var sqldb = require('../../sqldb');
 var User = sqldb.User;
+var Player = sqldb.Player;
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
@@ -85,6 +86,18 @@ exports.show = function(req, res, next) {
     .catch(function(err) {
       return next(err);
     });
+};
+
+exports.getGames = function(req, res) {
+  User.find({
+    _id: req.params.id
+  })
+    .then(function(user) {
+      user.getGames().then(function(games) {
+        res.json(games);
+      });
+    })
+    .catch(handleError(res));
 };
 
 /**
