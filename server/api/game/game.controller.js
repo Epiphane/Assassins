@@ -77,19 +77,10 @@ exports.show = function(req, res) {
     .then(handleEntityNotFound(res))
     .then(function(game) {
       if(game) {
-        game.getUsers({
-          order: 'player.elo'
-        }).then(function(users) {
-          game.dataValues.leaderboard = _.map(users, function(u) {
-            return _.merge(u.player, { 
-              dataValues: {
-                name: u.getDataValue('name') || u.getDataValue('email')
-              }
-            });
-          });
-
+        game.getLeaders(5).then(function(leaders) {
           game.getRound().then(function(round) {
-            game.dataValues.round = round;
+            game.dataValues.round       = round;
+            game.dataValues.leaderboard = leaders;
             
             res.json(game);
           });

@@ -63,6 +63,20 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     instanceMethods: {
+      getLeaders: function(limit) {
+        var self = this;
+        return this.getUsers({
+          order: 'player.elo'
+        }).then(function(users) {
+          return _.map(users, function(u) {
+            return _.merge(u.player, { 
+              dataValues: {
+                name: u.getDataValue('name') || u.getDataValue('email')
+              }
+            });
+          }).slice(0, limit);
+        });
+      },
       getRound: function() {
         var round = this.getDataValue('round');
         if(round) {
