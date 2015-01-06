@@ -54,7 +54,7 @@ exports.create = function(req, res) {
   if(!req.game)
     res.status(404).end();
   else {
-    req.game.findUsers({
+    req.game.getUsers({
       where: {
         _id: req.params.pid
       }
