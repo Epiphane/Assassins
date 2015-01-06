@@ -67,7 +67,7 @@ module.exports = function(sequelize, DataTypes) {
       getLeaders: function(limit) {
         var self = this;
         return this.getUsers({
-          order: 'player.elo'
+          order: 'player.elo DESC'
         }).then(function(users) {
           return _.map(users, function(u) {
             return _.merge(u.player, { 

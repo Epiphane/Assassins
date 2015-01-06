@@ -8,29 +8,72 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
  * App-wide Styles
  */
 
+$yellow: #EBC340;
+
+$white: #CCCCCC;
+$gray: #85807A;
+$dark-gray: #655346;
+$black: #170708;
+
+$light-red: #902D24;
+$dark-red: #560B0D;
+
 .browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
 }
 
-/* Top Navigation */
-
-.top-nav {
-    padding: 0 15px;
+html, body {
+  background: $dark-red;
+  color: $white;
 }
 
-.top-nav>li {
-    display: inline-block;
+.no-gutter {
+  &.left  { padding-left:  0; }
+  &.right { padding-right: 0; }
+
+  @media all and (min-width: 768px) {
+    &.left-sm  { padding-left:  0; }
+    &.right-sm { padding-right: 0; }
+  }
+
+  @media all and (min-width: 992px) {
+    &.left-md  { padding-left:  0; }
+    &.right-md { padding-right: 0; }
+  }
+}
+
+.navbar-inverse {
+  background: $black;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #655346;
+}
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+  border-top: 1px solid #655346;
+}
+
+.card {
+  float: left;
+  width: 100%;
+  background: $black;
+  padding: 15px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px lighten($black, 13.5%);
+  margin-bottom: 15px;
+
+  .card-title {
+    border: 1px solid $gray;
+    border-left: none;
+    border-top: none;
+    margin: -15px 10px 15px -15px;
+    padding: 10px;
     float: left;
-}
-
-.top-nav>li>a {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    line-height: 20px;
-    color: #999;
+    color: $yellow;
+  }
 }
 
 // Component styles are injected through grunt
@@ -39,6 +82,5 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'admin/admin.scss';
 @import 'dashboard/dashboard.scss';
 @import 'main/main.scss';
-@import 'testRoute/testRoute.scss';
 @import 'modal/modal.scss';
 // endinjector
