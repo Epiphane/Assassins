@@ -1,6 +1,6 @@
 <div class="container">
   <div class="game-page-header">
-    <div class="card">
+    <div class="card col-xs-12">
       <h1 class="game-page-title">{{ game.name }}
         <small class="lead game-page-subtitle" ng-show="game.organization">
           in {{ game.organization }}
@@ -41,10 +41,10 @@
 
     <div class="col-md-4 no-gutter left-md game-page-leaderboard">
       <div class="card">
-        <table class="table table-striped table-leaderboard">
-          <h2 class="card-title">Leaderboard</h2>
+        <h2 class="card-title">Leaderboard</h2>
+        <table class="table table-leaderboard">
           <tr ng-repeat="leader in game.leaderboard">
-            <td>{{ $index + 1 }}</td>
+            <td>{{ $index + 1 }})</td>
             <td>{{ leader.name }}</td>
             <td><img src="http://placekitten.com/g/50/50" class="img-thumbnail" /></td>
           </tr>

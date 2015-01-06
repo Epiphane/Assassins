@@ -26,8 +26,24 @@ $dark-red: #560B0D;
 }
 
 html, body {
-  background: $dark-red;
   color: $white;
+}
+
+body {
+  background: url(/assets/images/band.jpg);
+  background-size: auto 100vh;
+
+  &:before {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(50, 0, 0, 0.8);
+    transition: all .3s linear;
+  }
 }
 
 .no-gutter {
@@ -50,10 +66,10 @@ html, body {
 }
 
 .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: #655346;
+  background-color: $gray;
 }
 .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
-  border-top: 1px solid #655346;
+  border-top: none;
 }
 
 .card {
