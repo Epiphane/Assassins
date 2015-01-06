@@ -2,19 +2,32 @@
 
 angular.module('assassinsApp')
   .controller('DashboardCtrl', function ($scope, $stateParams, $state, $http) {
-    $scope.message = 'Hello';
+    $scope.safeApply = function(fn) {
+      var phase = this.$root.$$phase;
+      if(phase == '$apply' || phase == '$digest') {
+        if(fn && (typeof(fn) === 'function')) {
+          fn();
+        }
+      } else {
+        this.$apply(fn);
+      }
+    };
 
-    $http({
-      method: 'GET',
-      url: '/api/games/' + $stateParams.id
-    }).then(function(response) {
-      $scope.game = response.data;
-    }, function(error) {
-      if(error.status === 404)
-        $state.go('main');
-      else
-        console.log(error)
-    });
+    $scope.getGame = function() {
+      $http({
+        method: 'GET',
+        url: '/api/games/' + $stateParams.id
+      }).then(function(response) {
+        $scope.game = response.data;
+        $scope.safeApply();
+      }, function(error) {
+        if(error.status === 404)
+          $state.go('main');
+        else
+          console.log(error)
+      });
+    };
+    $scope.getGame();
 
     $scope.getPlayer = function() {
       $http({
@@ -24,12 +37,25 @@ angular.module('assassinsApp')
         if(response.data) {
           $scope.player = response.data.player;
           $scope.targets = response.data.targets;
+          $scope.safeApply();
         }
       }, function(error) {
         console.log(error)
       });
     };
     $scope.getPlayer();
+
+    $scope.killTarget = function(index) {
+      $http({
+        method: 'POST',
+        url: '/api/games/' + $stateParams.id + '/kills/' + $scope.targets[index]._id
+      }).then(function(response) {
+        $scope.getPlayer();
+        $scope.getGame();
+      }, function(error) {
+        console.log(error)
+      });
+    };
 
     $scope.joinGame = function() {
       $http({

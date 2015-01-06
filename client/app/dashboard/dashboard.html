@@ -6,19 +6,21 @@
           in {{ game.organization }}
         </small>
       </h1>
+      <h3>Elo: {{ player.elo }}</h3>
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-8 game-page-content">
-      <div class="card">
-        <div class="targets" ng-show="player">
-          <h3 class="card-title">Your targets:</h3>
-          <span ng-repeat="target in targets">{{ target.name }} | </span>
+      <h3 ng-show="player">Your targets:</h3>
+      <div ng-repeat="target in targets" class="col-xs-4 no-gutter" ng-class="{ left: $index % 3 !== 2, right: $index % 3 !== 0 }">
+        <div class="card">
+          <h4>{{ target.name }}</h4>
+          <img src="/assets/images/kill.png" class="kill-button" ng-click="killTarget($index)" />
         </div>
       </div>
 
-      <div class="card">
+      <div class="card col-xs-12">
         <div class="row col-xs-12">
           <h3 class="card-title" ng-show="player">You are in this game of {{ game.name }}</h3>
           <h3 class="card-title" ng-hide="player">You are NOT in this game of {{ game.name }} 
@@ -32,14 +34,14 @@
         {{ date(game.endDate) | date:'MMM dd' }}</p>
       </div>
       
-      <div class="card">
+      <div class="card col-xs-12">
           <h3 class="card-title">Rules:</h3>
           <span ng-bind-html="game.rules | newlines"></span>
       </div>
     </div>
 
     <div class="col-md-4 no-gutter left-md game-page-leaderboard">
-      <div class="card">
+      <div class="card col-xs-12">
         <h2 class="card-title">Leaderboard</h2>
         <table class="table table-leaderboard">
           <tr ng-repeat="leader in game.leaderboard">
