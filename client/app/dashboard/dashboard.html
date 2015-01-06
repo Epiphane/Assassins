@@ -17,8 +17,7 @@
       <div class="card">
         <div class="targets" ng-show="player">
           <h3 class="card-title">Your targets:</h3>
-          <span ng-hide="targets()">Please wait for the next round to get targets.</span>
-          <span ng-repeat="target in targets()">{{ target.name }} | </span>
+          <span ng-repeat="target in targets">{{ target.name }} | </span>
         </div>
       </div>
 
