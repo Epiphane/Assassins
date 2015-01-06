@@ -1,0 +1,64 @@
+
+
+
+.navbar {
+  @include linear-gradient(#322A2A, #272121, 60%, #151313);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+$dark-groove: 1px solid rgba(0, 0, 0, 0.2);
+$light-groove: 1px solid rgba(255, 255, 255, 0.1);
+
+.navbar-nav {
+  border-right: $dark-groove;
+  border-left: $light-groove;
+}
+
+.navbar-header {
+  border-right: $dark-groove;
+}
+
+.navbar-brand {
+  padding: 0;
+
+  img {
+    height: 52px;
+    position: absolute;
+    left: 0;
+    top: -1px;
+
+  }
+}
+
+#nav-games,
+#nav-games + ul {
+   margin-left: 200px; 
+}
+
+
+
+
+.nav {
+  .open > a,
+  .dropdown > a:hover,
+  .dropdown > a:focus {
+    background-color: #3e444c;
+  }
+}
+
+/** Silly dropdown isn't dark like the rest of the navbar */
+.inverse-dropdown {
+  background-color: #222;
+  border-color: #080808;
+  &>li>a {
+    color: #999;
+    &:hover {
+      color: #fff;
+      background-color: #000;
+    }
+  }
+  &>.divider {
+    background-color: #000;
+  }
+}

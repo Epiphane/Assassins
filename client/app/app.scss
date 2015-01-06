@@ -4,6 +4,14 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 @import 'font-awesome/scss/font-awesome';
 
+@mixin linear-gradient($fromColor, $midColor, $midPoint, $toColor) {
+  background-image: -webkit-linear-gradient($fromColor, $midColor $midPoint, $toColor);
+  background-image: -o-linear-gradient($fromColor, $midColor $midPoint, $toColor);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($fromColor), color-stop($midPoint, $midColor), to($toColor));
+  background-image: linear-gradient($fromColor, $midColor $midPoint, $toColor);
+  background-repeat: no-repeat;
+}
+
 /**
  * App-wide Styles
  */
@@ -75,10 +83,10 @@ body {
 .card {
   float: left;
   width: 100%;
-  background: $black;
+  @include linear-gradient(#320105, #2D0004, 60%, #140001);
   padding: 15px;
   border-radius: 2px;
-  box-shadow: 0 1px 2px lighten($black, 13.5%);
+  box-shadow: 0px 5px 19px #000;
   margin-bottom: 15px;
 
   .card-title {
@@ -98,5 +106,6 @@ body {
 @import 'admin/admin.scss';
 @import 'dashboard/dashboard.scss';
 @import 'main/main.scss';
+@import 'navbar.scss';
 @import 'modal/modal.scss';
 // endinjector

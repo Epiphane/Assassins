@@ -6,6 +6,9 @@
           in {{ game.organization }}
         </small>
       </h1>
+      <p class="col-xs-12">Duration:
+      {{ date(game.startDate) | date:'MMM dd' }} to
+      {{ date(game.endDate) | date:'MMM dd' }}</p>
     </div>
   </div>
 
@@ -28,9 +31,6 @@
             </button>
           </h3>
         </div>
-        <p class="col-xs-12">Duration:
-        {{ date(game.startDate) | date:'MMM dd' }} to
-        {{ date(game.endDate) | date:'MMM dd' }}</p>
       </div>
       
       <div class="card">
