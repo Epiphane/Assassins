@@ -21,8 +21,10 @@ angular.module('assassinsApp')
         method: 'GET',
         url: '/api/games/' + $stateParams.id + '/players/me'
       }).then(function(response) {
-        if(response.data.length > 0)
-          $scope.player = response.data[0].player;
+        if(response.data) {
+          $scope.player = response.data.player;
+          $scope.targets = response.data.targets;
+        }
       }, function(error) {
         console.log(error)
       });

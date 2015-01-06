@@ -41,12 +41,29 @@ exports.index = function(req, res) {
 exports.me = function(req, res) {
   req.game.getUsers({
     where: {
-      'player.active': true,
-      'player.userId': req.user._id
-    }
+      'player.active': true
+    },
+    order: 'player.elo DESC'
   })
-    .then(function(player) {
-      res.json(player);
+    .then(function(users) {
+      var notFound = true;
+      _.forEach(users, function(user, i) {
+        if(user.player.getDataValue('userId') === req.user._id) {
+          notFound = false;
+          var targets;
+          if(i < 3) targets = users.slice(0, i);
+          else targets = users.slice(i - 3, i);
+
+          if(i < users.length - 1) targets = targets.concat(users[i + 1]);
+
+          var player = user;
+          player.dataValues.targets = targets;
+          res.json(player);
+        }
+      });
+
+      if(notFound)
+        res.status(404);
     })
     .catch(handleError(res));
 };
