@@ -1,9 +1,10 @@
 <div class="col-md-8 game-page-content">
   <h3 ng-show="player">Your targets:</h3>
-  <div ng-repeat="target in targets" class="col-xs-4 no-gutter" ng-class="{ left: $index % 3 !== 2, right: $index % 3 !== 0 }">
-    <div class="card">
+  <div ng-repeat="target in targets" class="col-xs-4 no-gutter flexible-container">
+    <div class="card target-card">
       <h4>{{ target.name }}</h4>
-      <img src="/assets/images/kill.png" class="kill-button" ng-click="killTarget($index)" />
+      <img src="http://placekitten.com/g/50/50" class="img-thumbnail" />
+      <button type="button" class="btn btn-danger" ng-click="killTarget($index)">Report Kill</button>
     </div>
   </div>
 

@@ -25,7 +25,6 @@ User.sync({ force: forceUpdate })
     Kill.destroy();
   })
   .then(function() {
-
     // Create users
     User.bulkCreate([{
       provider: 'local',
