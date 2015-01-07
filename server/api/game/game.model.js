@@ -1,8 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-if(typeof(Promise) === 'undefined')
-  var Promise = require('promise');
+var Prom = require('promise');
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('game', {
@@ -17,6 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     organization: DataTypes.STRING,
+    groupId: DataTypes.BIGINT,
     rules: DataTypes.TEXT,
     startDate: {
       type: DataTypes.DATE,
@@ -92,13 +92,13 @@ module.exports = function(sequelize, DataTypes) {
           });
         }
         else {
-          return new Promise(function(fulfill, reject) {
+          return new Prom(function(fulfill, reject) {
             fulfill('Game has not started!');
           })
         }
       },
       createRound: function() {
-        return new Promise(function(fulfill, reject) {
+        return new Prom(function(fulfill, reject) {
           var round = this.getDataValue('round');
           if(round !== 0) {
             this.setDataValue('round', round + 1);

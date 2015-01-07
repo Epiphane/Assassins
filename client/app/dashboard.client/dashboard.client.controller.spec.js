@@ -1,16 +1,16 @@
 // 'use strict';
 
-// describe('Controller: DashboardCtrl', function () {
+// describe('Controller: DashboardClientCtrl', function () {
 
 //   // load the controller's module
 //   beforeEach(module('assassinsApp'));
 
-//   var DashboardCtrl, scope;
+//   var DashboardClientCtrl, scope;
 
 //   // Initialize the controller and a mock scope
 //   beforeEach(inject(function ($controller, $rootScope) {
 //     scope = $rootScope.$new();
-//     DashboardCtrl = $controller('DashboardCtrl', {
+//     DashboardClientCtrl = $controller('DashboardClientCtrl', {
 //       $scope: scope
 //     });
 //   }));

@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    rank: DataTypes.INTEGER
+    rank: DataTypes.INTEGER,
+    waitTime: DataTypes.DATE
   });
 };

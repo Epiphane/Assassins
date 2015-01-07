@@ -60,12 +60,20 @@ exports.create = function(req, res) {
       }
     }).then(function(killer) {
       if(killer) {
-        req.game.createKill({
-          killerUserId: req.user._id,
-          victimUserId: req.params.pid
-        })
-          .then(responseWithResult(res, 201))
-          .catch(handleError(res));
+        killer = killer[0];
+        if(killer.dataValues.player.waitTime < new Date()) {
+          req.game.createKill({
+            killerUserId: req.user._id,
+            victimUserId: req.params.pid
+          })
+            .then(responseWithResult(res, 201))
+            .catch(handleError(res));
+        }
+        else {
+          handleError(res, 400)({
+            message: 'You can\'t kill yet! Give it a rest!'
+          });
+        }
       }
       else
         handleError(res, 404)({

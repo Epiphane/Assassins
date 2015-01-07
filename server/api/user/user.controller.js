@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var https = require('https');
 var sqldb = require('../../sqldb');
 var User = sqldb.User;
 var Player = sqldb.Player;
@@ -96,6 +97,40 @@ exports.getGames = function(req, res) {
       user.getGames().then(function(games) {
         res.json(games);
       });
+    })
+    .catch(handleError(res));
+};
+
+exports.getFriends = function(req, res) {
+  User.find({
+    _id: req.user._id
+  })
+    .then(function(user) {
+      var fb = JSON.parse(user.getDataValue('facebook'));
+
+      var fbReq = https.request({
+          hostname: 'graph.facebook.com',
+          method: 'GET',
+          path: '/v2.0/515340825177583/members?access_token=' + fb.accessToken
+      }, function(fbRes) {
+          var output = '';
+          fbRes.setEncoding('utf8');
+
+          fbRes.on('data', function(chunk) {
+              output += chunk;
+          });
+
+          fbRes.on('end', function() {
+            res.json(JSON.parse(output));
+          });
+
+      });
+
+      fbReq.on('error', function(err) {
+          console.error(err);
+      });
+
+      fbReq.end();
     })
     .catch(handleError(res));
 };

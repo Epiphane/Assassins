@@ -21,7 +21,7 @@
             <li class="divider"></li>
             <li class="dropdown-header">Something else here</li>
             <li ng-repeat="game in games">
-              <a ui-sref="dashboard({ id: game._id })">{{ game.name }}</a>
+              <a ui-sref="dashboard.client({ id: game._id })">{{ game.name }}</a>
             </li>
           </ul>
         </li>

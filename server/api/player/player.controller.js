@@ -58,6 +58,10 @@ exports.me = function(req, res) {
 
           var player = user;
           player.dataValues.targets = targets;
+
+          if(new Date(player.player.getDataValue('waitTime')) > new Date()) {
+            player.dataValues.targets = [];
+          }
           res.json(player);
         }
       });

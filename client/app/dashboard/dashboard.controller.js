@@ -2,9 +2,13 @@
 
 angular.module('assassinsApp')
   .controller('DashboardCtrl', function ($scope, $stateParams, $state, $http) {
+    if($state.current.name === 'dashboard') {
+      $state.go('dashboard.client');
+    }
+
     $scope.safeApply = function(fn) {
       var phase = this.$root.$$phase;
-      if(phase == '$apply' || phase == '$digest') {
+      if(phase === '$apply' || phase === '$digest') {
         if(fn && (typeof(fn) === 'function')) {
           fn();
         }
@@ -21,10 +25,12 @@ angular.module('assassinsApp')
         $scope.game = response.data;
         $scope.safeApply();
       }, function(error) {
-        if(error.status === 404)
+        if(error.status === 404) {
           $state.go('main');
-        else
-          console.log(error)
+        }
+        else {
+          console.log(error);
+        }
       });
     };
     $scope.getGame();
@@ -40,7 +46,7 @@ angular.module('assassinsApp')
           $scope.safeApply();
         }
       }, function(error) {
-        console.log(error)
+        console.log(error);
       });
     };
     $scope.getPlayer();
@@ -49,11 +55,11 @@ angular.module('assassinsApp')
       $http({
         method: 'POST',
         url: '/api/games/' + $stateParams.id + '/kills/' + $scope.targets[index]._id
-      }).then(function(response) {
+      }).then(function() {
         $scope.getPlayer();
         $scope.getGame();
       }, function(error) {
-        console.log(error)
+        console.log(error);
       });
     };
 
@@ -66,7 +72,7 @@ angular.module('assassinsApp')
 
         $scope.getPlayer();
       }, function(error) {
-        console.log(error)
+        console.log(error);
       });
     };
 
@@ -82,14 +88,22 @@ angular.module('assassinsApp')
     $scope.date = function(gameDate) {
       return new Date(gameDate);
     };
+
+    $scope.isAdmin = function() {
+      if($scope.game && $scope.player) {
+        return $scope.game.GameMasterId === $scope.player.userId;
+      }
+    };
   });
 
 angular.module('assassinsApp')
   .filter('newlines', function() {
     return function(text) {
-      if(text)
+      if(text) {
         return text.replace(/\n/g, '<br />');
-      else
+      }
+      else {
         return '';
+      }
     };
   });

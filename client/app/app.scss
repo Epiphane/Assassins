@@ -1,6 +1,7 @@
 $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 $fa-font-path: "/bower_components/font-awesome/fonts";
 
+@import "bower_components/angular-ui-select/dist/select.min.css";
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 @import 'font-awesome/scss/font-awesome';
 
@@ -32,6 +33,7 @@ html, body {
 body {
   background: url(/assets/images/band.jpg);
   background-size: auto 100vh;
+  background-attachment: fixed;
 
   &:before {
     content: "";
@@ -94,6 +96,8 @@ body {
 // injector
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
+@import 'dashboard.admin/dashboard.admin.scss';
+@import 'dashboard.client/dashboard.client.scss';
 @import 'dashboard/dashboard.scss';
 @import 'main/main.scss';
 @import 'modal/modal.scss';

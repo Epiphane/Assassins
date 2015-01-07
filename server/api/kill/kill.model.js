@@ -15,6 +15,11 @@ module.exports = function(sequelize, DataTypes) {
                 throw 'Game, Killer, and Victim required';
               
               kill.setDataValue('dateTime', new Date());
+
+              var rightNow = new Date();
+              rightNow.setHours(rightNow.getHours() + 8);
+              killer.setDataValue('waitTime', rightNow);
+
               kill.setDataValue('round', game.getDataValue('round'));
 
               // Elo adjustment credits:

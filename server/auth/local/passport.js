@@ -4,7 +4,6 @@ var LocalStrategy = require('passport-local').Strategy;
 function localAuthenticate(User, email, password, done) {
   User.find({
     where: {
-      provider: 'local',
       email: email.toLowerCase()
     }
   })
