@@ -80,21 +80,23 @@ exports.create = function(req, res) {
             })
               .then(function(kill) {
                 if(process.env.SENDGRID_USERNAME) {
-                  fs.readFile(__dirname + '/killed.html', function(err, html) {
-                    if (err) { return console.error(err); }
-                    sendgrid.send({
-                      to:       victim.getDataValue('email'),
-                      from:     'donotreply@kill-your-friends.herokuapp.com',
-                      subject:  'Assassins: Killed by ' + req.user.name,
-                      html:     _.template(html)({
-                        killer: req.user,
-                        victim: victim
-                      })
-                    }, function(err, json) {
+                  kill.getVictim().then(function(victimPlayer) {
+                    fs.readFile(__dirname + '/killed.html', function(err, html) {
                       if (err) { return console.error(err); }
-                      console.log('Kill email sent to ' +
-                        victim.getDataValue('name') + '(' +
-                        victim.getDataValue('email') + ')');
+                      sendgrid.send({
+                        to:       victim.getDataValue('email'),
+                        from:     'donotreply@kill-your-friends.herokuapp.com',
+                        subject:  'Assassins: Killed by ' + req.user.name,
+                        html:     _.template(html)({
+                          killer: req.user,
+                          victim: victimPlayer
+                        })
+                      }, function(err, json) {
+                        if (err) { return console.error(err); }
+                        console.log('Kill email sent to ' +
+                          victim.getDataValue('name') + '(' +
+                          victim.getDataValue('email') + ')');
+                      });
                     });
                   });
                 }

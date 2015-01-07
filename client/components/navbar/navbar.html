@@ -12,21 +12,15 @@
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a id="nav-games" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Games<span class="caret"></span></a>
           <ul class="dropdown-menu inverse-dropdown" role="menu">
-            <li><a href="#">Create a Game</a></li>
-            <li><a href="#">Join a Game</a></li>
-            <li class="divider"></li>
-            <li class="dropdown-header">Something else here</li>
             <li ng-repeat="game in games">
               <a ui-sref="dashboard.client({ id: game._id })">{{ game.name }}</a>
             </li>
           </ul>
         </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
         <li ng-hide="isLoggedIn()">
           <a ui-sref="login">Login</a>
         </li>

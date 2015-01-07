@@ -22,6 +22,10 @@ angular.module('assassinsApp')
     };
     $scope.getGames();
 
+    $scope.$watch(function() {
+      return Auth.getCurrentUser(); 
+    }, $scope.getGames);
+
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
