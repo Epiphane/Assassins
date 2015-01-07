@@ -37,6 +37,7 @@ angular.module('assassinsApp')
         if(response.data) {
           $scope.player = response.data.player;
           $scope.targets = response.data.targets;
+          console.log(response.data.targets);
           $scope.safeApply();
         }
       }, function(error) {

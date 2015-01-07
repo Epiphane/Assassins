@@ -62,3 +62,10 @@ $light-groove: 1px solid rgba(255, 255, 255, 0.1);
     background-color: #000;
   }
 }
+
+@media only screen and (min-width : 768px) {
+    /* Make Navigation Toggle on Desktop Hover */
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+}
