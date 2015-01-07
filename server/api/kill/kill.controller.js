@@ -4,6 +4,11 @@ var _ = require('lodash');
 var sqldb = require('../../sqldb')
 var User = sqldb.User;
 var Kill = sqldb.Kill;
+if(process.env.SENDGRID_USERNAME) {
+  var fs = require('fs');
+  var sendgrid  = require('sendgrid')(process.env.SENDGRID_USERNAME,
+    process.env.SENDGRID_PASSWORD);
+}
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -58,14 +63,37 @@ exports.create = function(req, res) {
       where: {
         _id: req.params.pid
       }
-    }).then(function(killer) {
-      if(killer) {
-        killer = killer[0];
-        if(killer.dataValues.player.waitTime < new Date()) {
+    }).then(function(victim) {
+      if(victim) {
+        victim = victim[0];
+        if(victim.dataValues.player.waitTime < new Date()) {
           req.game.createKill({
             killerUserId: req.user._id,
             victimUserId: req.params.pid
           })
+            .then(function(kill) {
+              if(process.env.SENDGRID_USERNAME) {
+                fs.readFile(__dirname + '/killed.html', function(err, html) {
+                  if (err) { return console.error(err); }
+                  sendgrid.send({
+                    to:       victim.getDataValue('email'),
+                    from:     'donotreply@kill-your-friends.herokuapp.com',
+                    subject:  'Assassins: Killed by ' + req.user.name,
+                    html:     _.template(html)({
+                      killer: req.user,
+                      victim: victim
+                    })
+                  }, function(err, json) {
+                    if (err) { return console.error(err); }
+                    console.log('Intro email sent to ' +
+                      victim.getDataValue('name') + '(' +
+                      victim.getDataValue('email') + ')');
+                  });
+                });
+              }
+
+              return kill;
+            })
             .then(responseWithResult(res, 201))
             .catch(handleError(res));
         }
