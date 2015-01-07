@@ -49,9 +49,11 @@ User.sync({ force: forceUpdate })
           name: 'Kill your friends',
           organization: 'Mustang Band',
           groupId: 855038044552257,
-          rules: 'Honor system applies. Your victim gets an email whenever ' +
-            'you kill them, so be honest please.\n\n' +
-            'No shooting during jobs, or band.',
+          rules: '<i class="fa fa-heart"></i>  <b>Honor System</b> Killer reports kills.  Tell the truth!  Strohm is watching. <br><br>' +
+            '<i class="fa fa-check-circle-o"></i>  <b>Safe Zones:</b> <br>' +
+            '     <div class="indent"><i class="fa fa-institution"></i>  <b>Work</b> You can\'t be killed while working </div>' +
+            '     <div class="indent"><i class="fa fa-music"></i>    <b>Band</b> You can\'t be killed within 20 minutes of any Band class (before or after) </div> <br> ' +
+            '     <i class="fa fa-bar-chart"></i> <b>Scoring</b> Your score is tracked through an ELO system.  Kill people with <i>high</i> scores to get <i>more</i> points!',
           active: true,
           startDate: today,
           endDate: endOfQuarter,

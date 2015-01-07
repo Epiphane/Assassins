@@ -160,7 +160,19 @@ hr {
   margin: 0 0 15px 0;
 }
 
+.indent {
+  margin-left: 20px;
+  margin-bottom: 0;
+}
 
+.rules {
+  font-size: 20px;
+
+  .fa {
+    width: 20px;
+    color: #7A1515;
+  }
+}
 
 // Component styles are injected through grunt
 // injector
