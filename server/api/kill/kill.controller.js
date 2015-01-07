@@ -61,52 +61,60 @@ exports.create = function(req, res) {
   else {
     req.game.getUsers({
       where: {
-        _id: req.params.pid
+        _id: req.user._id
       }
-    }).then(function(victim) {
-      if(victim) {
-        victim = victim[0];
-        if(victim.dataValues.player.waitTime < new Date()) {
-          req.game.createKill({
-            killerUserId: req.user._id,
-            victimUserId: req.params.pid
-          })
-            .then(function(kill) {
-              if(process.env.SENDGRID_USERNAME) {
-                fs.readFile(__dirname + '/killed.html', function(err, html) {
-                  if (err) { return console.error(err); }
-                  sendgrid.send({
-                    to:       victim.getDataValue('email'),
-                    from:     'donotreply@kill-your-friends.herokuapp.com',
-                    subject:  'Assassins: Killed by ' + req.user.name,
-                    html:     _.template(html)({
-                      killer: req.user,
-                      victim: victim
-                    })
-                  }, function(err, json) {
-                    if (err) { return console.error(err); }
-                    console.log('Intro email sent to ' +
-                      victim.getDataValue('name') + '(' +
-                      victim.getDataValue('email') + ')');
-                  });
-                });
-              }
-
-              return kill;
+    }).then(function(killer) {
+      killer = killer[0];
+      req.game.getUsers({
+        where: {
+          _id: req.params.pid
+        }
+      }).then(function(victim) {
+        console.log(killer);
+        if(victim) {
+          victim = victim[0];
+          if(new Date(killer.dataValues.player.getDataValue('waitTime')) < new Date()) {
+            req.game.createKill({
+              killerUserId: req.user._id,
+              victimUserId: req.params.pid
             })
-            .then(responseWithResult(res, 201))
-            .catch(handleError(res));
+              .then(function(kill) {
+                if(process.env.SENDGRID_USERNAME) {
+                  fs.readFile(__dirname + '/killed.html', function(err, html) {
+                    if (err) { return console.error(err); }
+                    sendgrid.send({
+                      to:       victim.getDataValue('email'),
+                      from:     'donotreply@kill-your-friends.herokuapp.com',
+                      subject:  'Assassins: Killed by ' + req.user.name,
+                      html:     _.template(html)({
+                        killer: req.user,
+                        victim: victim
+                      })
+                    }, function(err, json) {
+                      if (err) { return console.error(err); }
+                      console.log('Kill email sent to ' +
+                        victim.getDataValue('name') + '(' +
+                        victim.getDataValue('email') + ')');
+                    });
+                  });
+                }
+
+                return kill;
+              })
+              .then(responseWithResult(res, 201))
+              .catch(handleError(res));
+          }
+          else {
+            handleError(res, 400)({
+              message: 'You can\'t kill yet! Give it a rest!'
+            });
+          }
         }
-        else {
-          handleError(res, 400)({
-            message: 'You can\'t kill yet! Give it a rest!'
+        else
+          handleError(res, 404)({
+            message: 'User is not playing this game'
           });
-        }
-      }
-      else
-        handleError(res, 404)({
-          message: 'User is not playing this game'
-        });
+      })
     });
   }
 };
