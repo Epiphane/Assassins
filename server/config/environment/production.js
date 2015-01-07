@@ -17,10 +17,10 @@ module.exports = {
     uri: process.env.DATABASE_URL,
     options: {
       dialog: 'postgres',
-      port: 5432,
-      logging: false
+      // logging: false,
+      port: 5432
     }
   },
 
-  seedDB: true
+  seedDB: false
 };

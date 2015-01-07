@@ -1,4 +1,5 @@
 var passport = require('passport');
+var _  = require('lodash');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 exports.setup = function(User, config) {
@@ -9,7 +10,9 @@ exports.setup = function(User, config) {
   },
   function(accessToken, refreshToken, profile, done) {
     User.find({
-      'facebook.id': profile.id
+      where: {
+        name: profile.displayName
+      }
     })
       .then(function(user) {
         if (!user) {
@@ -17,9 +20,11 @@ exports.setup = function(User, config) {
             name: profile.displayName,
             email: profile.emails[0].value,
             role: 'user',
-            username: profile.username,
             provider: 'facebook',
-            facebook: profile._json
+            facebook: _.merge(profile._json, { 
+              refreshToken: refreshToken,
+              accessToken:  accessToken
+            })
           });
           user.save()
             .then(function(user) {
@@ -28,7 +33,23 @@ exports.setup = function(User, config) {
             .catch(function(err) {
               return done(err);
             });
-        } else {
+        }
+        else if(!user.dataValues.facebook) {
+          user.dataValues.facebook = JSON.stringify(_.merge(profile._json, { 
+            refreshToken: refreshToken,
+            accessToken:  accessToken
+          }));
+          user.dataValues.email = profile.emails[0].value;
+
+          user.save({ hooks: false })
+            .then(function(user) {
+              return done(null, user);
+            })
+            .catch(function(err) {
+              return done(err);
+            });
+        }
+        else {
           return done(null, user);
         }
       })

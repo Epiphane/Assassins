@@ -11,12 +11,17 @@ module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('user', {
 
     _id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      get: function() {
+        return this.dataValues.name || this.dataValues.email;
+      }
+    },
     email: {
       type: DataTypes.STRING,
       unique: {
@@ -38,7 +43,16 @@ module.exports = function(sequelize, DataTypes) {
     },
     provider: DataTypes.STRING,
     salt: DataTypes.STRING,
-    facebook: DataTypes.TEXT,
+    facebook: {
+      type: DataTypes.TEXT,
+      get: function() {
+        if(this.dataValues.facebook)
+          return JSON.parse(this.dataValues.facebook);
+      },
+      set: function(json) {
+        this.dataValues.facebook = JSON.stringify(json);
+      }
+    },
     github: DataTypes.TEXT
 
   }, {

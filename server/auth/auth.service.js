@@ -84,6 +84,7 @@ function setTokenCookie(req, res) {
     });
   }
   var token = signToken(req.user._id, req.user.role);
+  console.log(token);
   res.cookie('token', JSON.stringify(token));
   res.redirect('/');
 }

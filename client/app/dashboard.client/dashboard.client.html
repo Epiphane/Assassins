@@ -1,0 +1,34 @@
+<div class="col-md-8 game-page-content">
+
+  <div class="card col-xs-12">
+    <div class="row col-xs-12">
+      <h3 class="card-title" ng-show="player">You are in this game of {{ game.name }}</h3>
+      <h3 class="card-title" ng-hide="player">You are NOT in this game of {{ game.name }} 
+        <button class="box box-small btn-info" ng-click="joinGame()">
+          Join now!
+        </button>
+      </h3>
+    </div>
+    <p class="col-xs-12">Duration:
+    {{ date(game.startDate) | date:'MMM dd' }} to
+    {{ date(game.endDate) | date:'MMM dd' }}</p>
+  </div>
+
+  <div class="card col-xs-12">
+      <h3 class="card-title">Rules:</h3>
+      <span ng-bind-html="game.rules | newlines"></span>
+  </div>
+</div>
+
+<div class="col-md-4 no-gutter left-md game-page-leaderboard">
+  <div class="card col-xs-12">
+    <h2 class="card-title">Leaderboard</h2>
+    <table class="table table-leaderboard">
+      <tr ng-repeat="leader in game.leaderboard">
+        <td>{{ $index + 1 }})</td>
+        <td>{{ leader.name }}</td>
+        <td><img src="http://graph.facebook.com/{{ leader.userId }}/picture" class="img-thumbnail" /></td>
+      </tr>
+    </table>
+  </div>
+</div>

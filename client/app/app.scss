@@ -1,24 +1,187 @@
 $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 $fa-font-path: "/bower_components/font-awesome/fonts";
 
+@import "bower_components/angular-ui-select/dist/select.min.css";
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 @import 'font-awesome/scss/font-awesome';
+
+@mixin linear-gradient($fromColor, $midColor, $midPoint, $toColor) {
+  background-image: -webkit-linear-gradient($fromColor, $midColor $midPoint, $toColor);
+  background-image: -o-linear-gradient($fromColor, $midColor $midPoint, $toColor);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($fromColor), color-stop($midPoint, $midColor), to($toColor));
+  background-image: linear-gradient($fromColor, $midColor $midPoint, $toColor);
+  background-repeat: no-repeat;
+}
+
+@mixin horiz-gradient($fromColor, $midColor, $toColor) {
+    background-image: -webkit-linear-gradient(left, $fromColor, $midColor, $toColor); 
+    background-image:    -moz-linear-gradient(left, $fromColor, $midColor, $toColor); 
+    background-image:     -ms-linear-gradient(left, $fromColor, $midColor, $toColor); 
+    background-image:      -o-linear-gradient(left, $fromColor, $midColor, $toColor); 
+}
+
 
 /**
  * App-wide Styles
  */
 
+$yellow: #EBC340;
+
+$white: #CCCCCC;
+$gray: #C4BFB9;
+$dark-gray: #655346;
+$black: #170708;
+
+$text-color: #212121;
+$subheading-color: #808080;
+
+$light-red: #902D24;
+$dark-red: #560B0D;
+
 .browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+html, body {
+  color: $text-color;
+}
+
+body {
+  background: url(/assets/images/band.jpg);
+  background-size: auto 100vh;
+  background-attachment: fixed;
+
+  &:before {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(50, 0, 0, 0.8);
+    transition: all .3s linear;
+  }
+}
+
+.no-gutter {
+  &.left  { padding-left:  0; }
+  &.right { padding-right: 0; }
+
+  @media all and (min-width: 768px) {
+    &.left-sm  { padding-left:  0; }
+    &.right-sm { padding-right: 0; }
+  }
+
+  @media all and (min-width: 992px) {
+    &.left-md  { padding-left:  0; }
+    &.right-md { padding-right: 0; }
+  }
+}
+
+.navbar-inverse {
+  background: $black;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: $gray;
+}
+
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+  border-top: none;
+  vertical-align: middle;
+}
+
+.table-leaderboard {
+  text-align: center;
+  
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+.card {
+  @include linear-gradient(#FEFEFE, #E5E5E6, 80%, #A2A2A2);
+  padding: 15px;
+  border-radius: 2px;
+  box-shadow: 0px 5px 19px #000;
+  margin-bottom: 15px;
+  margin-left: 15px;
+
+  .card-title {
+    margin: -5px 0 0 0;
+    padding: 10px;
+    text-align: center;
+  }
+}
+
+.card.target-card {
+  box-shadow: 0px 5px 19px rgba(0, 0, 0, 0.57);
+  text-align: center;
+  padding: 0;
+  width: 100px;
+  height: 136px;
+
+  vertical-align: top;
+  display: inline-block;
+
+  button {
+    margin-top: 10px;
+  }
+
+  h4 {
+    margin-top: 0px;
+  }
+}
+
+.flexible-container {
+  width: 100%;
+  text-align: justify;
+  -ms-text-justify: distribute-all-lines;
+  text-justify: distribute-all-lines;
+}
+
+.flexible-container:after {
+  content: '';
+  width: 100%;
+  display: inline-block;
+  font-size: 0;
+  line-height: 0
+}
+
+hr {  
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 0 0 15px 0;
+}
+
+.indent {
+  margin-left: 20px;
+  margin-bottom: 0;
+}
+
+.rules {
+  font-size: 20px;
+
+  .fa {
+    width: 20px;
+    color: #7A1515;
+  }
 }
 
 // Component styles are injected through grunt
 // injector
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
+@import 'dashboard.admin/dashboard.admin.scss';
+@import 'dashboard.client/dashboard.client.scss';
+@import 'dashboard/dashboard.scss';
 @import 'main/main.scss';
+@import 'navbar.scss';
 @import 'modal/modal.scss';
 // endinjector

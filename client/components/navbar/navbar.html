@@ -1,29 +1,54 @@
-<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-inverse navbar-static-top" ng-controller="NavbarCtrl">
   <div class="container">
     <div class="navbar-header">
-      <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="/" class="navbar-brand">assassins</a>
+      <a class="navbar-brand" ui-sref="main"><img src="/assets/images/kill-logo.png" /></a>
     </div>
-    <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
-      <ul class="nav navbar-nav">
-        <li ng-repeat="item in menu" ui-sref-active="active">
-            <a ui-sref="{{item.state}}">{{item.title}}</a>
-        </li>
-        <li ng-show="isAdmin()" ui-sref-active="active"><a ui-sref="admin">Admin</a></li>
-      </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li ng-hide="isLoggedIn()" ui-sref-active="active"><a ui-sref="signup">Sign up</a></li>
-        <li ng-hide="isLoggedIn()" ui-sref-active="active"><a ui-sref="login">Login</a></li>
-        <li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>
-        <li ng-show="isLoggedIn()" ui-sref-active="active"><a ui-sref="settings"><span class="glyphicon glyphicon-cog"></span></a></li>
-        <li ng-show="isLoggedIn()"><a ui-sref="logout">Logout</a></li>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a id="nav-games" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Games<span class="caret"></span></a>
+          <ul class="dropdown-menu inverse-dropdown" role="menu">
+            <li><a href="#">Create a Game</a></li>
+            <li><a href="#">Join a Game</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Something else here</li>
+            <li ng-repeat="game in games">
+              <a ui-sref="dashboard.client({ id: game._id })">{{ game.name }}</a>
+            </li>
+          </ul>
+        </li>
       </ul>
-    </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-hide="isLoggedIn()">
+          <a ui-sref="login">Login</a>
+        </li>
+        <li class="dropdown" ng-show="isLoggedIn()">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hello, {{ getCurrentUser().name }}<span class="caret"></span></a>
+          <ul class="dropdown-menu inverse-dropdown" role="menu">
+            <li><a ui-sref="account"><i class="fa fa-user"></i> Account</a></li>
+            <li><a ui-sref="settings"><i class="fa fa-cog"></i> Change Password</a></li>
+            <li><a ui-sref="logout"><i class="fa fa-power-off"></i> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
   </div>
-</div>
+</nav>
+
+
+<script type="text/javascript">
+// Make dropdowns appear on hover
+$('.dropdown-toggle').click(function() {
+    var location = $(this).attr('href');
+    window.location.href = location;
+    return false;
+});
+</script>

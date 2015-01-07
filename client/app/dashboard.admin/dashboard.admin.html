@@ -1,0 +1,21 @@
+<div class="col-xs-12">
+  <div class="card col-xs-12">
+    <h3 class="card-title">Edit Game</h3>
+
+    <form>
+      <div class="form-group">
+        <input type="text" ng-model="game.groupId" />
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="col-xs-12">
+  <div class="card col-xs-12">
+    <h3 class="card-title">Players <small>{{ players.length }}</small></h3>
+
+    <button class="btn btn-primary" ng-click="fetchPlayers()">
+      Fetch users
+    </button>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+.person {
+  position: relative;
+
+  .card {
+    box-shadow: none;
+    padding-left: 50px;
+    height: 100px;
+    padding-top: 0;
+  }
+
+  .btn {
+    color: #333;
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
