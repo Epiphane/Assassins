@@ -4,6 +4,22 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 @import 'font-awesome/scss/font-awesome';
 
+@mixin linear-gradient($fromColor, $midColor, $midPoint, $toColor) {
+  background-image: -webkit-linear-gradient($fromColor, $midColor $midPoint, $toColor);
+  background-image: -o-linear-gradient($fromColor, $midColor $midPoint, $toColor);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($fromColor), color-stop($midPoint, $midColor), to($toColor));
+  background-image: linear-gradient($fromColor, $midColor $midPoint, $toColor);
+  background-repeat: no-repeat;
+}
+
+@mixin horiz-gradient($fromColor, $midColor, $toColor) {
+    background-image: -webkit-linear-gradient(left, $fromColor, $midColor, $toColor); 
+    background-image:    -moz-linear-gradient(left, $fromColor, $midColor, $toColor); 
+    background-image:     -ms-linear-gradient(left, $fromColor, $midColor, $toColor); 
+    background-image:      -o-linear-gradient(left, $fromColor, $midColor, $toColor); 
+}
+
+
 /**
  * App-wide Styles
  */
@@ -11,9 +27,12 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 $yellow: #EBC340;
 
 $white: #CCCCCC;
-$gray: #85807A;
+$gray: #C4BFB9;
 $dark-gray: #655346;
 $black: #170708;
+
+$text-color: #212121;
+$subheading-color: #808080;
 
 $light-red: #902D24;
 $dark-red: #560B0D;
@@ -26,7 +45,7 @@ $dark-red: #560B0D;
 }
 
 html, body {
-  color: $white;
+  color: $text-color;
 }
 
 body {
@@ -68,27 +87,78 @@ body {
 .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
   background-color: $gray;
 }
+
 .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
   border-top: none;
+  vertical-align: middle;
+}
+
+.table-leaderboard {
+  text-align: center;
+  
+  td {
+    border-top: 1px solid #ddd;
+  }
 }
 
 .card {
-  background: $black;
+  @include linear-gradient(#FEFEFE, #E5E5E6, 80%, #A2A2A2);
   padding: 15px;
   border-radius: 2px;
-  box-shadow: 0 1px 2px lighten($black, 13.5%);
+  box-shadow: 0px 5px 19px #000;
   margin-bottom: 15px;
+  margin-left: 15px;
 
   .card-title {
-    border: 1px solid $gray;
-    border-left: none;
-    border-top: none;
-    margin: -15px 10px 15px -15px;
+    margin: -5px 0 0 0;
     padding: 10px;
-    float: left;
-    color: $yellow;
+    text-align: center;
   }
 }
+
+.card.target-card {
+  box-shadow: 0px 5px 19px rgba(0, 0, 0, 0.57);
+  text-align: center;
+  padding: 0;
+  width: 100px;
+  height: 136px;
+
+  vertical-align: top;
+  display: inline-block;
+
+  button {
+    margin-top: 10px;
+  }
+
+  h4 {
+    margin-top: 0px;
+  }
+}
+
+.flexible-container {
+  width: 100%;
+  text-align: justify;
+  -ms-text-justify: distribute-all-lines;
+  text-justify: distribute-all-lines;
+}
+
+.flexible-container:after {
+  content: '';
+  width: 100%;
+  display: inline-block;
+  font-size: 0;
+  line-height: 0
+}
+
+hr {  
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 0 0 15px 0;
+}
+
+
 
 // Component styles are injected through grunt
 // injector
@@ -96,5 +166,6 @@ body {
 @import 'admin/admin.scss';
 @import 'dashboard/dashboard.scss';
 @import 'main/main.scss';
+@import 'navbar.scss';
 @import 'modal/modal.scss';
 // endinjector
