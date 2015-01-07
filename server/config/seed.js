@@ -61,6 +61,7 @@ User.sync({ force: forceUpdate })
           users[0].addGame(game).then(function(thomas) {
               users[1].addGame(game).then(function(elliot) {
                 // game.createRound();
+                return;
 
                 // Thomas killed Elliot!
                 game.createKill({
