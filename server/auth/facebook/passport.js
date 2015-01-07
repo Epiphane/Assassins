@@ -39,6 +39,7 @@ exports.setup = function(User, config) {
             refreshToken: refreshToken,
             accessToken:  accessToken
           }));
+          user.dataValues.email = profile.emails[0].value;
 
           user.save({ hooks: false })
             .then(function(user) {
