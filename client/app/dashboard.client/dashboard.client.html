@@ -2,8 +2,8 @@
   <h3 ng-show="player">Your targets:</h3>
   <div ng-repeat="target in targets" class="col-xs-4 no-gutter flexible-container">
     <div class="card target-card">
-      <h4>{{ target.name }}</h4>
-      <img src="http://placekitten.com/g/50/50" class="img-thumbnail" />
+      <h4><a href="http://facebook.com/{{ target._id }}">{{ target.name }}</a></h4>
+      <img src="http://graph.facebook.com/{{ target._id }}/picture" class="img-thumbnail" />
       <button type="button" class="btn btn-danger" ng-click="killTarget($index)">Report Kill</button>
     </div>
   </div>
@@ -35,7 +35,7 @@
       <tr ng-repeat="leader in game.leaderboard">
         <td>{{ $index + 1 }})</td>
         <td>{{ leader.name }}</td>
-        <td><img src="http://placekitten.com/g/50/50" class="img-thumbnail" /></td>
+        <td><img src="http://graph.facebook.com/{{ leader.userId }}/picture" class="img-thumbnail" /></td>
       </tr>
     </table>
   </div>

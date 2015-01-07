@@ -61,19 +61,18 @@ User.sync({ force: forceUpdate })
           users[0].addGame(game).then(function(thomas) {
               users[1].addGame(game).then(function(elliot) {
                 // game.createRound();
-                return;
 
                 // Thomas killed Elliot!
-                game.createKill({
-                  killerUserId: thomas.getDataValue('userId'),
-                  victimUserId: elliot.getDataValue('userId')
-                });
+                // game.createKill({
+                //   killerUserId: thomas.getDataValue('userId'),
+                //   victimUserId: elliot.getDataValue('userId')
+                // });
 
-                // Elliot got him back!
-                game.createKill({
-                  killerUserId: elliot.getDataValue('userId'),
-                  victimUserId: thomas.getDataValue('userId')
-                });
+                // // Elliot got him back!
+                // game.createKill({
+                //   killerUserId: elliot.getDataValue('userId'),
+                //   victimUserId: thomas.getDataValue('userId')
+                // });
               });
           });
         });
